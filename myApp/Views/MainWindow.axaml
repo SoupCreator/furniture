@@ -1,0 +1,102 @@
+<Window
+    x:Class="myApp.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:myApp.ViewModels"
+    Title="myApp"
+    x:DataType="vm:MainWindowViewModel"
+    Icon="/Assets/avalonia-logo.ico"
+    FontFamily="Montserrat Alternates"
+    mc:Ignorable="d" d:DesignHeight="1080" d:DesignWidth="1920"
+    Width="1920" Height="1080">
+
+
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Grid Background="{DynamicResource PrimaryBackground}" RowDefinitions="*" ColumnDefinitions="Auto,*"
+          ShowGridLines="True">
+        <StackPanel Orientation="Vertical" Spacing="21" Margin="21" VerticalAlignment="Stretch" >
+            <Border Background="#484848" Height="120" CornerRadius="24" >
+                <Border Margin="10" Background="{DynamicResource ButtonBackground}" CornerRadius="14">
+                    <StackPanel VerticalAlignment="Center" Margin="5 0 5 0 ">
+                        <Image PointerPressed="InputElement_OnPointerPressed" Source="{Binding SideMenuImage}"
+                               Height="66">
+                        </Image>
+                    </StackPanel>
+                </Border>
+            </Border>
+            <Border Grid.Column="0" Background="#484848" CornerRadius="24" Height="897">
+                <StackPanel Spacing="21" Margin="21" Orientation="Vertical" >
+                    <Button HorizontalAlignment="Stretch" Height="73">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{SvgImage /Assets/Images/home.svg}" Width="47" Height="47"
+                                   HorizontalAlignment="Left" Margin="10 5 10 5">
+                            </Image>
+                            <Label Content="Главная" VerticalAlignment="Center"
+                                   IsVisible="{Binding FullMenuVisible}">
+                            </Label>
+                        </StackPanel>
+                    </Button>
+                    <Button HorizontalAlignment="Stretch" Height="73" >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{SvgImage /Assets/Images/category.svg}" Width="47" Height="47"
+                                   HorizontalAlignment="Left" Margin="10 5 10 5">
+                            </Image>
+                            <Label Content="Товары" VerticalAlignment="Center"
+                                   IsVisible="{Binding FullMenuVisible}">
+                            </Label>
+                        </StackPanel>
+                    </Button>
+                    <Button HorizontalAlignment="Stretch" Height="73">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{SvgImage /Assets/Images/services.svg}" Width="47" Height="47"
+                                   HorizontalAlignment="Left" Margin="10 5 10 5">
+                            </Image>
+                            <Label Content="Услуги" VerticalAlignment="Center"
+                                   IsVisible="{Binding FullMenuVisible}">
+                            </Label>
+                        </StackPanel>
+                    </Button>
+                    <Button HorizontalAlignment="Stretch" Height="73">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{SvgImage /Assets/Images/cart.svg}" Width="47" Height="47"
+                                   HorizontalAlignment="Left" Margin="10 5 10 5">
+                            </Image>
+                            <Label Content="Корзина" VerticalAlignment="Center"
+                                   IsVisible="{Binding FullMenuVisible}">
+                            </Label>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+        <Grid Grid.Column="1" RowDefinitions="515,502" ShowGridLines="True" Margin="0 21 21 21" RowSpacing="21"
+              HorizontalAlignment="Center">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="21">
+                <Button Width="889" Height="515" Padding="0" CornerRadius="12">
+                    <Image Source="{SvgImage /Assets/Images/tables.svg}" Stretch="UniformToFill"></Image>
+                </Button>
+                <Button Width="515" Height="515" Padding="0" Background="Transparent" CornerRadius="12">
+                    <Image Source="{SvgImage /Assets/Images/мягкая.svg}" Stretch="UniformToFill"></Image>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="21">
+                
+                <Button Width="502" Height="502" CornerRadius="12" Padding="0" >
+                    <Image Source="{SvgImage /Assets/Images/kitchen.svg}" Stretch="UniformToFill"></Image>
+                </Button>
+                <Button Width="902" Height="502" Padding="0" CornerRadius="12">
+                    <Image Source="{SvgImage /Assets/Images/bed.svg}" Stretch="UniformToFill"></Image>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
