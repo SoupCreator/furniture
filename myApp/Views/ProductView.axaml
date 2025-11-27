@@ -1,0 +1,160 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             xmlns:vm="clr-namespace:myApp.ViewModels"
+             xmlns:conv="clr-namespace:Avalonia.Data.Converters;assembly=Avalonia.Base"
+             x:DataType="vm:ProductViewModel"
+             FontFamily="Montserrat Alternates"
+             mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+             x:Class="myApp.Views.ProductView">
+    <Design.DataContext>
+        <vm:ProductViewModel />
+    </Design.DataContext>
+
+    <UserControl.Styles>
+        <Style Selector="ListBoxItem">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0,0,0,15" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="CornerRadius" Value="15" />
+        </Style>
+        <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+        <!-- Card Style for List Items -->
+        <Style Selector="Border.ProductCard">
+            <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
+            <Setter Property="CornerRadius" Value="15" />
+            <Setter Property="Padding" Value="15" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Background" Duration="0:0:0.2" />
+                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.2" />
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="ListBoxItem:pointerover Border.ProductCard">
+            <Setter Property="Background" Value="#333333" />
+            <Setter Property="RenderTransform" Value="scale(1.02)" />
+        </Style>
+        <Style Selector="ListBoxItem:selected Border.ProductCard">
+            <Setter Property="Background" Value="#404040" />
+            <Setter Property="BorderBrush" Value="{DynamicResource RedBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid ColumnDefinitions="*, 400" Margin="20">
+
+        <!-- Left Column: Product List -->
+        <Border Grid.Column="1" Background="{DynamicResource BorderBackground}" CornerRadius="30" Padding="20"
+                Margin="20,0,0,0">
+            <Border.BoxShadow>
+                0 10 40 0 #15000000
+            </Border.BoxShadow>
+            <Grid RowDefinitions="Auto, *">
+                <TextBlock Text="Товары" FontSize="28" FontWeight="Bold" Foreground="White" Margin="10,0,0,20" />
+
+                <ListBox Grid.Row="1" ItemsSource="{Binding Products}"
+                         SelectedItem="{Binding SelectedProduct}"
+                         Background="Transparent" BorderThickness="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Classes="ProductCard">
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <StackPanel Spacing="5" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding ProductName}" FontWeight="Bold" FontSize="16"
+                                                   Foreground="White" />
+                                        <TextBlock Text="{Binding ProductPrice, StringFormat='{}{0:N0} ₽'}"
+                                                   FontSize="14" Foreground="{DynamicResource GrayBrush}" />
+                                    </StackPanel>
+                                    <Border Grid.Column="1" Width="60" Height="60" CornerRadius="10"
+                                            ClipToBounds="True" Background="White">
+                                        <Image asyncImageLoader:ImageLoader.Source="{Binding ProductImage}"
+                                               Stretch="Uniform" Margin="5" />
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Border>
+
+        
+        <Border Grid.Column="0" Background="{DynamicResource BorderBackground}" CornerRadius="30" Padding="40">
+            <Border.BoxShadow>
+                0 10 40 0 #15000000
+            </Border.BoxShadow>
+            <Grid>
+                <Grid RowDefinitions="*, Auto"
+                      IsVisible="{Binding SelectedProduct, Converter={x:Static conv:ObjectConverters.IsNotNull}}">
+
+                    <!-- Top Section: Image and Info -->
+                    <Grid Grid.Row="0" ColumnDefinitions="*, 400">
+                        <!-- Large Image -->
+                        <Border Grid.Column="0" Background="White" CornerRadius="25" Margin="0,0,40,0"
+                                ClipToBounds="True">
+                            <Image asyncImageLoader:ImageLoader.Source="{Binding SelectedProduct.ProductImage}"
+                                   Stretch="Uniform" Margin="40" />
+                        </Border>
+
+                        <!-- Info -->
+                        <StackPanel Grid.Column="1" Spacing="20" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding SelectedProduct.ProductName}"
+                                       FontSize="42" FontWeight="Bold" Foreground="White" TextWrapping="Wrap" />
+
+                            <TextBlock Text="{Binding SelectedProduct.ProductPrice, StringFormat='{}{0:N0} ₽'}"
+                                       FontSize="32" FontWeight="SemiBold" Foreground="{DynamicResource RedBrush}" />
+
+                            <Border Height="1" Background="{DynamicResource GrayBrush}" Opacity="0.3" Margin="0,10" />
+
+                            <TextBlock Text="Описание:" FontWeight="Bold" FontSize="18" Foreground="White" />
+                            <TextBlock Text="{Binding SelectedProduct.ProductParams}"
+                                       FontSize="16" Foreground="{DynamicResource GrayBrush}" TextWrapping="Wrap"
+                                       LineHeight="24" />
+
+                            <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,20,0,0">
+                                <Border Background="#2A2A2A" CornerRadius="8" Padding="10,5">
+                                    <TextBlock Text="В наличии" Foreground="#4CAF50" FontWeight="Bold" />
+                                </Border>
+                                <Border Background="#2A2A2A" CornerRadius="8" Padding="10,5">
+                                    <TextBlock Text="Доставка" Foreground="{DynamicResource GrayBrush}" />
+                                </Border>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Bottom Section: Action Button -->
+                    <Grid Grid.Row="1" Margin="0,40,0,0">
+                        <Button Command="{Binding AddToCartCommand}"
+                                Background="{DynamicResource RedBrush}" Foreground="White"
+                                CornerRadius="15" Height="70" HorizontalAlignment="Right" Padding="40,0"
+                                Cursor="Hand">
+                            <StackPanel Orientation="Horizontal" Spacing="15">
+                                <PathIcon
+                                    Data="M11,9H13V6H16V4H13V1H11V4H8V6H11M7,18A2,2 0 0,0 9,20A2,2 0 0,0 11,18A2,2 0 0,0 9,16A2,2 0 0,0 7,18M17,18A2,2 0 0,0 19,20A2,2 0 0,0 21,18A2,2 0 0,0 19,16A2,2 0 0,0 17,18M7.17,14.75L7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.59 17.3,11.97L21.16,4.96L19.42,4H19.41L18.31,6L15.55,11H8.53L8.4,10.73L6.16,6L5.21,4L4.27,2H1V4H3L6.6,11.59L5.25,14.03C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H21V15H7.42C7.29,15 7.17,14.89 7.17,14.75Z"
+                                    Foreground="White" Width="24" Height="24" />
+                                <TextBlock Text="В корзину" FontSize="20" FontWeight="Bold"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Grid>
+
+                <!-- Empty State -->
+                <Grid IsVisible="{Binding SelectedProduct, Converter={x:Static conv:ObjectConverters.IsNull}}"
+                      HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="Выберите продукт из списка справа"
+                               FontSize="24" Foreground="{DynamicResource GrayBrush}" />
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

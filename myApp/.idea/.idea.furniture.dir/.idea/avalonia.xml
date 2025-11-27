@@ -5,7 +5,16 @@
       <map>
         <entry key="App.axaml" value="myApp.csproj" />
         <entry key="Styles/AppDefaultStyle.axaml" value="myApp.csproj" />
+        <entry key="Views/Cart.axaml" value="myApp.csproj" />
+        <entry key="Views/CartView.axaml" value="myApp.csproj" />
+        <entry key="Views/Category.axaml" value="myApp.csproj" />
+        <entry key="Views/CategoryView.axaml" value="myApp.csproj" />
+        <entry key="Views/HomeView.axaml" value="myApp.csproj" />
         <entry key="Views/MainWindow.axaml" value="myApp.csproj" />
+        <entry key="Views/ProductView.axaml" value="myApp.csproj" />
+        <entry key="Views/Services.axaml" value="myApp.csproj" />
+        <entry key="Views/ServicesView.axaml" value="myApp.csproj" />
+        <entry key="Views/navigationView.axaml" value="myApp.csproj" />
       </map>
     </option>
   </component>

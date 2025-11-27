@@ -1,23 +1,120 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
-        <Border Padding="20" Background="{DynamicResource BorderBackground}" >
+        <Border Padding="20"  Width="500">
             <!-- Add Controls for Previewer Here -->
-            <Button Content="Sample Button" Width="390" VerticalContentAlignment="Center" FontSize=""
-                    CornerRadius="24" Height="73" />
+            <ListBox Classes="ModernList">
+                <ListBoxItem>Элемент 1</ListBoxItem>
+                <ListBoxItem>Элемент 2</ListBoxItem>
+                <ListBoxItem>Элемент 3</ListBoxItem>
+
+            </ListBox>
+
+
         </Border>
     </Design.PreviewWith>
 
-    <!-- Add Styles Here -->
+
+    <Style Selector="ListBox.ModernList">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="Padding" Value="5" />
+    </Style>
+
+    <Style Selector="ListBox.ModernList > ListBoxItem">
+        <Setter Property="Margin" Value="0,0,0,12" /> <Setter Property="Padding" Value="0" />
+        <Setter Property="CornerRadius" Value="12" /> <Setter Property="Background" Value="{DynamicResource ButtonGradientBackground}" />
+        <Setter Property="Cursor" Value="Hand" /> <Setter Property="Foreground" Value="#ededed"></Setter> 
+        
+
+        <Setter Property="Transitions">
+            <Transitions>
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.15"
+                                               Easing="CircularEaseOut" />
+                <BrushTransition Property="Background" Duration="0:0:0.15" />
+                
+            </Transitions>
+        </Setter>
+
+        
+
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+    </Style>
+
+    <Style
+        Selector="ListBox.ModernList > ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="#302f2f"></Setter>
+        <Setter Property="Foreground" Value="White"></Setter>
+    </Style>
+    <Style Selector="ListBox.ModernList > ListBoxItem:pointerover">
+        <Setter Property="RenderTransform" Value="scale(1.02)" />
+        <Setter Property="ZIndex" Value="1" />
+    </Style>
+
+    <Style Selector="ListBox.ModernList > ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource ButtonActiveGradient}"></Setter>
+        <Setter Property="Foreground" Value="White"></Setter>
+    </Style>
+    <Style Selector="ListBox.ModernList > ListBoxItem:selected">
+        
+        
+    </Style>
+
+    <Style Selector="ListBox.ModernList > ListBoxItem:pressed">
+        <Setter Property="RenderTransform" Value="scale(0.98)" />
+    </Style>
+
+
     <Style Selector="Button">
-        <Setter Property="Background" Value="{DynamicResource ButtonBackground}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource ButtonGradientBackground}"></Setter>
         <Setter Property="CornerRadius" Value="24"></Setter>
         <Setter Property="Foreground" Value="#ededed"></Setter>
         <Setter Property="FontSize" Value="40"></Setter>
     </Style>
-    
+
     <Style Selector="Button:pointerover /template/ ContentPresenter">
         <Setter Property="Background" Value="#302f2f"></Setter>
         <Setter Property="Foreground" Value="White"></Setter>
+        <Setter Property="RenderTransform" Value="scale(1.02)" />
+        <Setter Property="ZIndex" Value="1" />
     </Style>
+
+    <Style Selector="Button.active /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource ButtonActiveGradient}"></Setter>
+        <Setter Property="Foreground" Value="White"></Setter>
+        <Setter Property="RenderTransform" Value="scale(0.98)" />
+    </Style>
+    <Style Selector="Button.active:pointerover /template/ ContentPresenter">
+        <Setter Property="Foreground" Value="White"></Setter>
+        <Setter Property="RenderTransform" Value="scale(1.02)" />
+        <Setter Property="ZIndex" Value="1" />
+    </Style>
+    <Style Selector="Button.active:product /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource ButtonActiveGradient}"></Setter>
+        <Setter Property="Foreground" Value="White"></Setter>
+        <Setter Property="RenderTransform" Value="scale(0.98)" />
+    </Style>
+    <Style Selector="Button.active:product:pointerover /template/ ContentPresenter">
+        <Setter Property="Foreground" Value="White"></Setter>
+        <Setter Property="RenderTransform" Value="scale(1.02)" />
+        <Setter Property="ZIndex" Value="1" />
+    </Style>
+    <Style Selector="TextBlock.ColHeader">
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{DynamicResource GrayBrush}"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+    </Style>
+    
+    <Style Selector="Button.QtyBtn">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Foreground" Value="{DynamicResource GrayBrush}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+    </Style>
+    
+    
 </Styles>

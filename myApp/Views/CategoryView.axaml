@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:myApp.ViewModels"
+             x:DataType="vm:CategoryViewModel"
+             mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+             x:Class="myApp.Views.CategoryView">
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:CategoryViewModel />
+    </Design.DataContext>
+    <Grid>
+        <ContentControl Content="{Binding CurrentPage}"/>
+        <Grid Grid.Column="1" RowDefinitions="515,502" ShowGridLines="True" Margin="0 21 21 21" RowSpacing="21"
+              HorizontalAlignment="Center">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="21">
+            
+                <Button Width="889" Height="515" Padding="0" CornerRadius="12" Command="{Binding GoToProductPageCommand}" >
+                    <Image Source="{SvgImage /Assets/Images/tables.svg}" Stretch="UniformToFill"></Image>
+                </Button>
+                <Button Width="515" Height="515" Padding="0" Background="Transparent" CornerRadius="12">
+                    <Image Source="{SvgImage /Assets/Images/мягкая.svg}" Stretch="UniformToFill"></Image>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="21">
+
+                <Button Width="502" Height="502" CornerRadius="12" Padding="0">
+                    <Image Source="{SvgImage /Assets/Images/kitchen.svg}" Stretch="UniformToFill"></Image>
+                </Button>
+                <Button Width="902" Height="502" Padding="0" CornerRadius="12">
+                    <Image Source="{SvgImage /Assets/Images/bed.svg}" Stretch="UniformToFill"></Image>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+    
+
+</UserControl>

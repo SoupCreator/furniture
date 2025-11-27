@@ -1,0 +1,202 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:myApp.ViewModels"
+             xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             x:DataType="vm:CartViewModel"
+             FontFamily="Montserrat Alternates"
+             mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+             x:Class="myApp.Views.CartView">
+
+    <Design.DataContext>
+        <vm:CartViewModel />
+    </Design.DataContext>
+
+    <UserControl.Styles>
+        <Style Selector="Button.QtyBtn">
+            <Setter Property="Width" Value="32"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Background" Value="{DynamicResource ButtonBackground}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style Selector="Button.QtyBtn:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ButtonActiveGradient}"/>
+        </Style>
+        
+        <Style Selector="Button.RemoveBtn">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource GrayBrush}"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+         <Style Selector="Button.RemoveBtn:pointerover /template/ ContentPresenter">
+            <Setter Property="Foreground" Value="{DynamicResource RedBrush}"/>
+             <Setter Property="Background" Value="Transparent"/>
+        </Style>
+
+        <Style Selector="TextBlock.ColHeader">
+            <Setter Property="Foreground" Value="{DynamicResource GrayBrush}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="LetterSpacing" Value="1"/>
+        </Style>
+        
+        <Style Selector="RadioButton">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid>
+        <Border Margin="40" Background="{DynamicResource BorderBackground}" 
+                CornerRadius="30" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Border.BoxShadow>
+                0 10 50 0 #15000000
+            </Border.BoxShadow>
+
+            <Grid RowDefinitions="Auto, Auto, *, Auto" Margin="50">
+
+                <!-- Header -->
+                <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,50">
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="КОРЗИНА" FontSize="42" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text="{Binding Items.Count, StringFormat='{}{0} items in your cart'}" 
+                                   FontSize="16" Foreground="{DynamicResource GrayBrush}"/>
+                    </StackPanel>
+                    
+                    <Button Grid.Column="1" CornerRadius="12" BorderBrush="{DynamicResource GrayBrush}" BorderThickness="1" 
+                            Background="Transparent" Padding="20,12" Cursor="Hand">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="←" VerticalAlignment="Center" Foreground="White"/>
+                            <TextBlock Text="Вернуться к товарам" FontWeight="SemiBold" Foreground="White"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+                <!-- Column Headers -->
+                <Grid Grid.Row="1" ColumnDefinitions="3*, 1.5*, 1.2*, 1.2*, 50" Margin="0,0,0,25">
+                    <TextBlock Text="ТОВАР" Classes="ColHeader" Margin="10,0,0,0"/>
+                    <TextBlock Text="ЦЕНА" Classes="ColHeader" Grid.Column="1"/>
+                    <TextBlock Text="КОЛИЧЕСТВО" Classes="ColHeader" Grid.Column="2" HorizontalAlignment="Center"/>
+                    <TextBlock Text="СУММА" Classes="ColHeader" Grid.Column="3" HorizontalAlignment="Right"/>
+                </Grid>
+                
+                <Border Grid.Row="1" BorderBrush="{DynamicResource GrayBrush}" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Margin="0,0,0,-10" Opacity="0.3"/>
+
+                <!-- ListBox for dynamic items -->
+                <ListBox Grid.Row="2" ItemsSource="{Binding Items}" Background="Transparent" BorderThickness="0" Margin="0,10,0,0">
+                    <ListBox.Styles>
+                        <Style Selector="ListBoxItem">
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="Margin" Value="0,0,0,15"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                        </Style>
+                         <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="Transparent"/>
+                        </Style>
+                         <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                            <Setter Property="Background" Value="Transparent"/>
+                        </Style>
+                    </ListBox.Styles>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{DynamicResource ButtonBackground}" CornerRadius="15" Padding="10" Margin="0,5">
+                                <Grid ColumnDefinitions="3*, 1.5*, 1.2*, 1.2*, 50">
+                                    <StackPanel Orientation="Horizontal" Spacing="25">
+                                        <Border Width="100" Height="100" Background="White" CornerRadius="16" ClipToBounds="True">
+                                            <Image asyncImageLoader:ImageLoader.Source="{Binding Product.ProductImage}" Stretch="Uniform" Margin="10"/>
+                                        </Border>
+                                        <StackPanel VerticalAlignment="Center" Spacing="6">
+                                            <TextBlock Text="{Binding Product.ProductName}" FontWeight="Bold" FontSize="18" Foreground="White"/>
+                                            <TextBlock Text="{Binding Product.ProductParams}" 
+                                                       FontSize="13" Foreground="{DynamicResource GrayBrush}" TextWrapping="Wrap" MaxWidth="300"/>
+                                            <TextBlock Text="In Stock" FontSize="12" Foreground="#4CAF50" FontWeight="Medium" Margin="0,5,0,0"/>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <TextBlock Grid.Column="1" Text="{Binding Product.ProductPrice, StringFormat='{}{0:N0} ₽'}" 
+                                               FontWeight="SemiBold" FontSize="16" VerticalAlignment="Center" Foreground="White"/>
+
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15">
+                                        <Button Content="−" Classes="QtyBtn" Command="{Binding $parent[UserControl].((vm:CartViewModel)DataContext).DecrementQuantityCommand}" CommandParameter="{Binding .}"/>
+                                        <TextBlock Text="{Binding Quantity}" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Width="20" TextAlignment="Center" Foreground="White"/>
+                                        <Button Content="+" Classes="QtyBtn" Command="{Binding $parent[UserControl].((vm:CartViewModel)DataContext).IncrementQuantityCommand}" CommandParameter="{Binding .}"/>
+                                    </StackPanel>
+
+                                    <TextBlock Grid.Column="3" Text="{Binding TotalPrice, StringFormat='{}{0:N0} ₽'}" 
+                                               FontWeight="Bold" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="White"/>
+
+                                    <Button Grid.Column="4" Content="×" Classes="RemoveBtn" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                            Command="{Binding $parent[UserControl].((vm:CartViewModel)DataContext).RemoveItemCommand}" CommandParameter="{Binding .}"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <!-- Footer / Checkout Section -->
+                <Grid Grid.Row="3" ColumnDefinitions="2*, 1.5*" Margin="0,40,0,0">
+                    
+                    <!-- Shipping Options -->
+                    <StackPanel Grid.Column="0" Spacing="20" Margin="0,0,50,0">
+                        <TextBlock Text="Дополнительные услуги" FontWeight="Bold" FontSize="18" Foreground="White"/>
+                        
+                        <Border BorderBrush="{DynamicResource GrayBrush}" BorderThickness="1" CornerRadius="12" Padding="20" Background="{DynamicResource ButtonBackground}">
+                            <StackPanel Spacing="15">
+                                <RadioButton IsChecked="True" GroupName="Shipping" Content="Доставка до двери" FontWeight="SemiBold"/>
+                                <TextBlock Text="Точная стоимость уточняется у продаца" FontSize="13" Foreground="{DynamicResource GrayBrush}" Margin="28,-10,0,0"/>
+                                
+                                <Border Height="1" Background="{DynamicResource GrayBrush}" Opacity="0.3"/>
+                                
+                                <RadioButton GroupName="Shipping" Content="Сборка мебели" FontWeight="SemiBold"/>
+                                <TextBlock Text="Точная стоимость уточняется у сборщика" FontSize="13" Foreground="{DynamicResource GrayBrush}" Margin="28,-10,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Order Summary -->
+                    <Border Grid.Column="1" Background="{DynamicResource ButtonBackground}" CornerRadius="20" Padding="30">
+                        <StackPanel Spacing="20">
+                            <TextBlock Text="Сумма заказа" FontWeight="Bold" FontSize="20" Foreground="White"/>
+                            
+                            <Grid ColumnDefinitions="*, Auto">
+                                <TextBlock Grid.Column="0" Text="Сумма товаров" Foreground="{DynamicResource GrayBrush}"/>
+                                <TextBlock Grid.Column="1" Text="{Binding TotalAmount, StringFormat='{}{0:N0} ₽'}" FontWeight="SemiBold" Foreground="White"/>
+                            </Grid>
+                            
+                            <Grid ColumnDefinitions="*, Auto">
+                                <TextBlock Grid.Column="0" Text="Услуги" Foreground="{DynamicResource GrayBrush}"/>
+                                <TextBlock Grid.Column="1" Text="Free" FontWeight="SemiBold" Foreground="#4CAF50"/>
+                            </Grid>
+                            
+                            <Border Height="1" Background="{DynamicResource GrayBrush}" Margin="0,10" Opacity="0.3"/>
+                            
+                            <Grid ColumnDefinitions="*, Auto">
+                                <TextBlock Grid.Column="0" Text="Сумма" FontWeight="Bold" FontSize="18" Foreground="White"/>
+                                <TextBlock Grid.Column="1" Text="{Binding TotalAmount, StringFormat='{}{0:N0} ₽'}" FontWeight="Bold" FontSize="24" Foreground="White"/>
+                            </Grid>
+
+                            <Button Background="{DynamicResource RedBrush}" Foreground="White" CornerRadius="12" Height="60" 
+                                    HorizontalAlignment="Stretch" Margin="0,10,0,0" Cursor="Hand">
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <TextBlock Text="Оформить заказ" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Margin="25,0"/>
+                                    <PathIcon Grid.Column="1" Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" 
+                                              Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
+                                </Grid>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
