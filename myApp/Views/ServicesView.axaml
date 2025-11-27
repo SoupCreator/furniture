@@ -1,0 +1,34 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:myApp.ViewModels"
+             xmlns:svg="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls"
+             xmlns:model="clr-namespace:myApp.Models"
+             x:DataType="vm:ServicesViewModel"
+             mc:Ignorable="d"
+             x:Class="myApp.Views.ServicesView"
+             d:DesignWidth="1920" d:DesignHeight="1080"
+             >
+            
+    <Design.DataContext>
+        <vm:ServicesViewModel/>
+    </Design.DataContext>
+   
+
+    <Grid ColumnDefinitions="Auto,Auto"  Margin="0 21 21 21"  HorizontalAlignment="Center" ColumnSpacing="21" >
+        <StackPanel Orientation="Vertical" Grid.Column="0" Spacing="21">
+            <Image Grid.Column="0" Grid.Row="0" Source="{SvgImage /Assets/Images/compulation.svg}" HorizontalAlignment="Center"/>
+            <Button Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Width="552" CornerRadius="30"
+                    Content="Добавить" 
+                    Height="73" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="21">
+            <Image Grid.Row="0" Grid.Column="1" Source="{SvgImage /Assets/Images/delivery.svg}"/>
+            <Button Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Width="552" CornerRadius="30"
+                    Content="Добавить" 
+                    Height="73" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        </StackPanel>
+        
+    </Grid>
+</UserControl>

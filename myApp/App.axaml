@@ -1,7 +1,7 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="myApp.App"
-             xmlns:local="using:myApp"
+             xmlns:local="clr-namespace:myApp"
              RequestedThemeVariant="Default"
              xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Avalonia.Svg.Skia">
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
@@ -16,9 +16,20 @@
     </Application.Styles>
     
     <Application.Resources>
+        <LinearGradientBrush x:Key="ButtonActiveGradient" StartPoint="0%,0%" EndPoint="100%, 0%" >
+            <GradientStop Offset="0" Color="#134032" ></GradientStop>
+            <GradientStop Offset="1" Color="#3cff85" ></GradientStop>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="ButtonGradientBackground">
+            <GradientStop Offset="0" Color="#080808" ></GradientStop>
+            <GradientStop Offset="1" Color="#303030" ></GradientStop>
+        </LinearGradientBrush>
         <SolidColorBrush x:Key="PrimaryBackground">#d6d6d6</SolidColorBrush>
         <SolidColorBrush x:Key="BorderBackground">#484848</SolidColorBrush>
         <SolidColorBrush x:Key="ButtonBackground">#1f1f1f</SolidColorBrush>
         <FontFamily x:Key="MontserratAlternates">/Assets/Fonts/Montserrat Alternates.ttf#Montserrat Alternates</FontFamily>
+        <SolidColorBrush x:Key="RedBrush" Color="#FF3B30"/>
+        <SolidColorBrush x:Key="DarkBrush" Color="#1A1A1A"/>
+        <SolidColorBrush x:Key="GrayBrush" Color="#8F9299"/>
     </Application.Resources>
 </Application>
