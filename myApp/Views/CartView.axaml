@@ -13,47 +13,7 @@
         <vm:CartViewModel />
     </Design.DataContext>
 
-    <UserControl.Styles>
-        <Style Selector="Button.QtyBtn">
-            <Setter Property="Width" Value="32"/>
-            <Setter Property="Height" Value="32"/>
-            <Setter Property="CornerRadius" Value="16"/>
-            <Setter Property="Background" Value="{DynamicResource ButtonBackground}"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="BorderThickness" Value="0"/>
-        </Style>
-        <Style Selector="Button.QtyBtn:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource ButtonActiveGradient}"/>
-        </Style>
-        
-        <Style Selector="Button.RemoveBtn">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{DynamicResource GrayBrush}"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="BorderThickness" Value="0"/>
-        </Style>
-         <Style Selector="Button.RemoveBtn:pointerover /template/ ContentPresenter">
-            <Setter Property="Foreground" Value="{DynamicResource RedBrush}"/>
-             <Setter Property="Background" Value="Transparent"/>
-        </Style>
 
-        <Style Selector="TextBlock.ColHeader">
-            <Setter Property="Foreground" Value="{DynamicResource GrayBrush}"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="LetterSpacing" Value="1"/>
-        </Style>
-        
-        <Style Selector="RadioButton">
-            <Setter Property="Foreground" Value="White"/>
-        </Style>
-    </UserControl.Styles>
 
     <Grid>
         <Border Margin="40" Background="{DynamicResource BorderBackground}" 
@@ -73,7 +33,7 @@
                     </StackPanel>
                     
                     <Button Grid.Column="1" CornerRadius="12" BorderBrush="{DynamicResource GrayBrush}" BorderThickness="1" 
-                            Background="Transparent" Padding="20,12" Cursor="Hand">
+                            Background="Transparent" Padding="20,12" Cursor="Hand" Command="{Binding GoToCategoryPageCommand}">
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <TextBlock Text="←" VerticalAlignment="Center" Foreground="White"/>
                             <TextBlock Text="Вернуться к товарам" FontWeight="SemiBold" Foreground="White"/>
@@ -145,20 +105,35 @@
                 <!-- Footer / Checkout Section -->
                 <Grid Grid.Row="3" ColumnDefinitions="2*, 1.5*" Margin="0,40,0,0">
                     
-                    <!-- Shipping Options -->
+                    <!-- Services -->
                     <StackPanel Grid.Column="0" Spacing="20" Margin="0,0,50,0">
                         <TextBlock Text="Дополнительные услуги" FontWeight="Bold" FontSize="18" Foreground="White"/>
                         
                         <Border BorderBrush="{DynamicResource GrayBrush}" BorderThickness="1" CornerRadius="12" Padding="20" Background="{DynamicResource ButtonBackground}">
-                            <StackPanel Spacing="15">
-                                <RadioButton IsChecked="True" GroupName="Shipping" Content="Доставка до двери" FontWeight="SemiBold"/>
-                                <TextBlock Text="Точная стоимость уточняется у продаца" FontSize="13" Foreground="{DynamicResource GrayBrush}" Margin="28,-10,0,0"/>
-                                
-                                <Border Height="1" Background="{DynamicResource GrayBrush}" Opacity="0.3"/>
-                                
-                                <RadioButton GroupName="Shipping" Content="Сборка мебели" FontWeight="SemiBold"/>
-                                <TextBlock Text="Точная стоимость уточняется у сборщика" FontSize="13" Foreground="{DynamicResource GrayBrush}" Margin="28,-10,0,0"/>
-                            </StackPanel>
+                            <ItemsControl ItemsSource="{Binding Services}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Classes="ServiceToggleBtn" 
+                                                Command="{Binding $parent[UserControl].((vm:CartViewModel)DataContext).ToggleServiceCommand}"
+                                                CommandParameter="{Binding .}">
+                                            <Grid ColumnDefinitions="Auto, *, Auto">
+                                                <!-- Round Indicator -->
+                                                <Border Grid.Column="0" Width="24" Height="24" CornerRadius="12" BorderBrush="White" BorderThickness="2" Margin="0,0,15,0">
+                                                    <Border Background="#4CAF50" CornerRadius="6" Margin="4" IsVisible="{Binding IsSelected}"/>
+                                                </Border>
+                                                
+                                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding Service.ServiceName}" FontWeight="SemiBold" Foreground="White"
+                                                               FontSize="20"/>
+                                                </StackPanel>
+
+                                                <TextBlock Grid.Column="2" Text="{Binding Service.ServicePrice, StringFormat='{}{0:N0} ₽'}" 
+                                                           Foreground="White" FontWeight="Bold" VerticalAlignment="Center" FontSize="18"/>
+                                            </Grid>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </Border>
                     </StackPanel>
 
@@ -174,7 +149,7 @@
                             
                             <Grid ColumnDefinitions="*, Auto">
                                 <TextBlock Grid.Column="0" Text="Услуги" Foreground="{DynamicResource GrayBrush}"/>
-                                <TextBlock Grid.Column="1" Text="Free" FontWeight="SemiBold" Foreground="#4CAF50"/>
+                                <TextBlock Grid.Column="1" Text="{Binding ServicesTotal, StringFormat='{}{0:N0} ₽'}" FontWeight="SemiBold" Foreground="#4CAF50"/>
                             </Grid>
                             
                             <Border Height="1" Background="{DynamicResource GrayBrush}" Margin="0,10" Opacity="0.3"/>
@@ -185,7 +160,7 @@
                             </Grid>
 
                             <Button Background="{DynamicResource RedBrush}" Foreground="White" CornerRadius="12" Height="60" 
-                                    HorizontalAlignment="Stretch" Margin="0,10,0,0" Cursor="Hand">
+                                    HorizontalAlignment="Stretch" Margin="0,10,0,0" Cursor="Hand" Command="{Binding SaveWorkOrderCommand}">
                                 <Grid ColumnDefinitions="*, Auto">
                                     <TextBlock Text="Оформить заказ" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Margin="25,0"/>
                                     <PathIcon Grid.Column="1" Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" 

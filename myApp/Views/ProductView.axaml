@@ -13,42 +13,7 @@
         <vm:ProductViewModel />
     </Design.DataContext>
 
-    <UserControl.Styles>
-        <Style Selector="ListBoxItem">
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Margin" Value="0,0,0,15" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="CornerRadius" Value="15" />
-        </Style>
-        <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
-        <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
 
-        <!-- Card Style for List Items -->
-        <Style Selector="Border.ProductCard">
-            <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
-            <Setter Property="CornerRadius" Value="15" />
-            <Setter Property="Padding" Value="15" />
-            <Setter Property="Transitions">
-                <Transitions>
-                    <BrushTransition Property="Background" Duration="0:0:0.2" />
-                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.2" />
-                </Transitions>
-            </Setter>
-        </Style>
-        <Style Selector="ListBoxItem:pointerover Border.ProductCard">
-            <Setter Property="Background" Value="#333333" />
-            <Setter Property="RenderTransform" Value="scale(1.02)" />
-        </Style>
-        <Style Selector="ListBoxItem:selected Border.ProductCard">
-            <Setter Property="Background" Value="#404040" />
-            <Setter Property="BorderBrush" Value="{DynamicResource RedBrush}" />
-            <Setter Property="BorderThickness" Value="1" />
-        </Style>
-    </UserControl.Styles>
 
     <Grid ColumnDefinitions="*, 400" Margin="20">
 
@@ -63,7 +28,8 @@
 
                 <ListBox Grid.Row="1" ItemsSource="{Binding Products}"
                          SelectedItem="{Binding SelectedProduct}"
-                         Background="Transparent" BorderThickness="0">
+                         Background="Transparent" BorderThickness="0"
+                         Classes="ProductList">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Border Classes="ProductCard">

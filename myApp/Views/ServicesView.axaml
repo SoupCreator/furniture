@@ -9,26 +9,56 @@
              mc:Ignorable="d"
              x:Class="myApp.Views.ServicesView"
              d:DesignWidth="1920" d:DesignHeight="1080"
-             >
-            
-    <Design.DataContext>
-        <vm:ServicesViewModel/>
-    </Design.DataContext>
-   
+             FontFamily="Montserrat Alternates">
 
-    <Grid ColumnDefinitions="Auto,Auto"  Margin="0 21 21 21"  HorizontalAlignment="Center" ColumnSpacing="21" >
-        <StackPanel Orientation="Vertical" Grid.Column="0" Spacing="21">
-            <Image Grid.Column="0" Grid.Row="0" Source="{SvgImage /Assets/Images/compulation.svg}" HorizontalAlignment="Center"/>
-            <Button Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Width="552" CornerRadius="30"
-                    Content="Добавить" 
-                    Height="73" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-        </StackPanel>
-        <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="21">
-            <Image Grid.Row="0" Grid.Column="1" Source="{SvgImage /Assets/Images/delivery.svg}"/>
-            <Button Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Width="552" CornerRadius="30"
-                    Content="Добавить" 
-                    Height="73" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        </StackPanel>
+    <Design.DataContext>
         
+        <vm:ServicesViewModel />
+    </Design.DataContext>
+
+
+
+    <Grid Margin="40">
+        <StackPanel Spacing="30">
+            <TextBlock Text="Услуги" FontSize="42" FontWeight="Bold" Foreground="White"
+                       HorizontalAlignment="Center" />
+
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding Services}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Classes="ServiceBtn" Classes.Selected="{Binding IsSelected}"
+                                    Command="{Binding $parent[UserControl].((vm:ServicesViewModel)DataContext).ToggleServiceCommand}"
+                                    CommandParameter="{Binding .}"
+                                    Margin="20" Width="400" Height="250">
+                                <StackPanel Spacing="20" VerticalAlignment="Center">
+                                    <!-- Placeholder Icon/Image -->
+                                    <PathIcon
+                                        Data="M20,8H4V6H20M20,18H4V12H20M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"
+                                        Width="50" Height="50"  />
+
+                                    <TextBlock Text="{Binding Service.ServiceName}" TextWrapping="Wrap"
+                                               TextAlignment="Center" FontSize="24" FontWeight="Bold"
+                                                />
+
+                                    <TextBlock Text="{Binding Service.ServicePrice, StringFormat='{}{0:N0} ₽'}"
+                                               FontSize="20"  FontWeight="Bold"
+                                               TextAlignment="Center"  />
+                                    
+                                    <TextBlock Text="ВЫБРАНО"  FontWeight="Bold" 
+                                               FontSize="16" IsVisible="{Binding IsSelected}" 
+                                               HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </StackPanel>
     </Grid>
 </UserControl>

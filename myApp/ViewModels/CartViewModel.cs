@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.EntityFrameworkCore;
 using myApp.Data;
 using myApp.Models;
@@ -13,12 +14,15 @@ namespace myApp.ViewModels;
 
 public partial class CartViewModel : ViewModelBase
 {
-    private readonly CartService _cartService;
+    [ObservableProperty] 
+    private  CartService _cartService;
 
-    public ObservableCollection<CartItem> Items => _cartService.Items;
+    public readonly CategoryViewModel _categoryPage;
     
-
+    public ObservableCollection<CartItem> Items => _cartService.Items;
+    public ObservableCollection<ServiceItem> Services => _cartService.Services;
     public double TotalAmount => _cartService.TotalAmount;
+    public double ServicesTotal => _cartService.ServicesTotal;
 
     public CartViewModel()
     {
@@ -26,6 +30,7 @@ public partial class CartViewModel : ViewModelBase
     }
     public CartViewModel(CartService cartService)
     {
+        _categoryPage = new CategoryViewModel(cartService);
         _cartService = cartService;
         _cartService.PropertyChanged += (s, e) =>
         {
@@ -33,33 +38,14 @@ public partial class CartViewModel : ViewModelBase
             {
                 OnPropertyChanged(nameof(TotalAmount));
             }
+            if (e.PropertyName == nameof(CartService.ServicesTotal))
+            {
+                OnPropertyChanged(nameof(ServicesTotal));
+            }
         };
-        
-        // Pre-load some items if cart is empty, just to show "values from DB"
-        if (!_cartService.Items.Any())
-        {
-             _ = LoadInitialData();
-        }
     }
 
-    private async Task LoadInitialData()
-    {
-        try
-        {
-            using (var context = new AppDbContext())
-            {
-                var products = await context.Products.Take(2).ToListAsync();
-                foreach (var product in products)
-                {
-                    _cartService.AddToCart(product);
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error loading initial cart data: {ex.Message}");
-        }
-    }
+
 
     [RelayCommand]
     private void IncrementQuantity(CartItem item)
@@ -78,4 +64,24 @@ public partial class CartViewModel : ViewModelBase
     {
         _cartService.RemoveItem(item);
     }
+    
+    [RelayCommand]
+    private void SaveWorkOrder()
+    {
+        _cartService.CheckoutWorkOrder();
+    }
+    
+    [RelayCommand]
+    private void GoToCategoryPage()
+    {
+        WeakReferenceMessenger.Default.Send(new NavigateMessage(_categoryPage));
+    }
+
+    [RelayCommand]
+    private void ToggleService(ServiceItem item)
+    {
+        _cartService.ToggleService(item);
+    }
+
+    
 }

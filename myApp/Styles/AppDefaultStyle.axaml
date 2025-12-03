@@ -7,14 +7,11 @@
                 <ListBoxItem>Элемент 1</ListBoxItem>
                 <ListBoxItem>Элемент 2</ListBoxItem>
                 <ListBoxItem>Элемент 3</ListBoxItem>
-
             </ListBox>
-
-
         </Border>
     </Design.PreviewWith>
 
-
+    <!-- ModernList Styles -->
     <Style Selector="ListBox.ModernList">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
@@ -25,25 +22,17 @@
         <Setter Property="Margin" Value="0,0,0,12" /> <Setter Property="Padding" Value="0" />
         <Setter Property="CornerRadius" Value="12" /> <Setter Property="Background" Value="{DynamicResource ButtonGradientBackground}" />
         <Setter Property="Cursor" Value="Hand" /> <Setter Property="Foreground" Value="#ededed"></Setter> 
-        
-
         <Setter Property="Transitions">
             <Transitions>
-                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.15"
-                                               Easing="CircularEaseOut" />
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.15" Easing="CircularEaseOut" />
                 <BrushTransition Property="Background" Duration="0:0:0.15" />
-                
             </Transitions>
         </Setter>
-
-        
-
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 
-    <Style
-        Selector="ListBox.ModernList > ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Style Selector="ListBox.ModernList > ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
         <Setter Property="Background" Value="#302f2f"></Setter>
         <Setter Property="Foreground" Value="White"></Setter>
     </Style>
@@ -56,65 +45,214 @@
         <Setter Property="Background" Value="{DynamicResource ButtonActiveGradient}"></Setter>
         <Setter Property="Foreground" Value="White"></Setter>
     </Style>
-    <Style Selector="ListBox.ModernList > ListBoxItem:selected">
-        
-        
-    </Style>
-
     <Style Selector="ListBox.ModernList > ListBoxItem:pressed">
         <Setter Property="RenderTransform" Value="scale(0.98)" />
     </Style>
 
 
+    <!-- Default Button Styles -->
     <Style Selector="Button">
         <Setter Property="Background" Value="{DynamicResource ButtonGradientBackground}"></Setter>
         <Setter Property="CornerRadius" Value="24"></Setter>
         <Setter Property="Foreground" Value="#ededed"></Setter>
         <Setter Property="FontSize" Value="40"></Setter>
+        <Setter Property="Transitions">
+            <Transitions>
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" Easing="CircularEaseOut" />
+                <BrushTransition Property="Background" Duration="0:0:0.2" />
+            </Transitions>
+        </Setter>
     </Style>
 
     <Style Selector="Button:pointerover /template/ ContentPresenter">
         <Setter Property="Background" Value="#302f2f"></Setter>
         <Setter Property="Foreground" Value="White"></Setter>
+    </Style>
+    <Style Selector="Button:pointerover">
         <Setter Property="RenderTransform" Value="scale(1.02)" />
         <Setter Property="ZIndex" Value="1" />
     </Style>
+    <Style Selector="Button:pressed">
+        <Setter Property="RenderTransform" Value="scale(0.95)" />
+    </Style>
 
+    <!-- Active Button Style -->
     <Style Selector="Button.active /template/ ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource ButtonActiveGradient}"></Setter>
         <Setter Property="Foreground" Value="White"></Setter>
-        <Setter Property="RenderTransform" Value="scale(0.98)" />
     </Style>
     <Style Selector="Button.active:pointerover /template/ ContentPresenter">
         <Setter Property="Foreground" Value="White"></Setter>
-        <Setter Property="RenderTransform" Value="scale(1.02)" />
-        <Setter Property="ZIndex" Value="1" />
-    </Style>
-    <Style Selector="Button.active:product /template/ ContentPresenter">
-        <Setter Property="Background" Value="{DynamicResource ButtonActiveGradient}"></Setter>
-        <Setter Property="Foreground" Value="White"></Setter>
-        <Setter Property="RenderTransform" Value="scale(0.98)" />
-    </Style>
-    <Style Selector="Button.active:product:pointerover /template/ ContentPresenter">
-        <Setter Property="Foreground" Value="White"></Setter>
-        <Setter Property="RenderTransform" Value="scale(1.02)" />
-        <Setter Property="ZIndex" Value="1" />
-    </Style>
-    <Style Selector="TextBlock.ColHeader">
-        <Setter Property="FontSize" Value="11"/>
-        <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="Foreground" Value="{DynamicResource GrayBrush}"/>
-        <Setter Property="HorizontalAlignment" Value="Left"/>
     </Style>
     
-    <Style Selector="Button.QtyBtn">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Padding" Value="5"/>
-        <Setter Property="Foreground" Value="{DynamicResource GrayBrush}"/>
-        <Setter Property="FontWeight" Value="Bold"/>
+    <!-- ServiceBtn Style (From ServicesView) -->
+    <Style Selector="Button.ServiceBtn">
+        <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
+        <Setter Property="Foreground" Value="#ededed" />
+        <Setter Property="CornerRadius" Value="30" />
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.2" />
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.15" Easing="CircularEaseOut" />
+            </Transitions>
+        </Setter>
+    </Style>
+    <Style Selector="Button.ServiceBtn:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="#302f2f" />
+    </Style>
+    <Style Selector="Button.ServiceBtn:pointerover">
+        <Setter Property="RenderTransform" Value="scale(1.03)" />
+        <Setter Property="ZIndex" Value="1" />
         <Setter Property="Cursor" Value="Hand"/>
     </Style>
+    <Style Selector="Button.ServiceBtn:pressed">
+        <Setter Property="RenderTransform" Value="scale(0.97)" />
+    </Style>
+
+    <!-- ServiceBtn Selected State -->
+    <Style Selector="Button.ServiceBtn.Selected">
+        <Setter Property="Background" Value="{DynamicResource ButtonActiveGradient}" />
+        <Setter Property="Foreground" Value="White"></Setter>
+    </Style>
     
+    <Style Selector="Button.ServiceBtn.Selected:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource ButtonActiveGradient}" />
+        <Setter Property="Foreground" Value="White"></Setter>
+    </Style>
+
+    <!-- QtyBtn Style (From CartView) -->
+    <Style Selector="Button.QtyBtn">
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="CornerRadius" Value="16"/>
+        <Setter Property="Background" Value="{DynamicResource ButtonBackground}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" />
+                <BrushTransition Property="Background" Duration="0:0:0.2" />
+            </Transitions>
+        </Setter>
+    </Style>
+    <Style Selector="Button.QtyBtn:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource ButtonActiveGradient}"/>
+    </Style>
+    <Style Selector="Button.QtyBtn:pointerover">
+        <Setter Property="RenderTransform" Value="scale(1.1)"/>
+    </Style>
+    <Style Selector="Button.QtyBtn:pressed">
+        <Setter Property="RenderTransform" Value="scale(0.9)"/>
+    </Style>
+
+    <!-- RemoveBtn Style (From CartView) -->
+    <Style Selector="Button.RemoveBtn">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource GrayBrush}"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" />
+                <BrushTransition Property="Foreground" Duration="0:0:0.2" />
+            </Transitions>
+        </Setter>
+    </Style>
+    <Style Selector="Button.RemoveBtn:pointerover /template/ ContentPresenter">
+        <Setter Property="Foreground" Value="{DynamicResource RedBrush}"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style Selector="Button.RemoveBtn:pointerover">
+        <Setter Property="RenderTransform" Value="scale(1.2) rotate(90deg)"/>
+    </Style>
+    <Style Selector="Button.RemoveBtn:pressed">
+        <Setter Property="RenderTransform" Value="scale(0.9)"/>
+    </Style>
+
+    <!-- ColHeader Style (From CartView) -->
+    <Style Selector="TextBlock.ColHeader">
+        <Setter Property="Foreground" Value="{DynamicResource GrayBrush}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="LetterSpacing" Value="1"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+    </Style>
+
+    <!-- ServiceToggleBtn Style (New for CartView) -->
+    <Style Selector="Button.ServiceToggleBtn">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="0,0,0,15"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" />
+                <BrushTransition Property="Background" Duration="0:0:0.2" />
+            </Transitions>
+        </Setter>
+    </Style>
+    <Style Selector="Button.ServiceToggleBtn:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="#1AFFFFFF"/> <!-- Slight white tint on hover -->
+    </Style>
+    <Style Selector="Button.ServiceToggleBtn:pointerover">
+        <Setter Property="RenderTransform" Value="translateX(5px)"/> <!-- Slide effect -->
+    </Style>
     
+    <!-- RadioButton Style -->
+    <Style Selector="RadioButton">
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    
+    <!-- ProductList Styles (From ProductView) -->
+    <Style Selector="ListBox.ProductList > ListBoxItem">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="0,0,0,15" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="CornerRadius" Value="15" />
+    </Style>
+    <Style Selector="ListBox.ProductList > ListBoxItem:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="ListBox.ProductList > ListBoxItem:selected /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <!-- ProductCard Style -->
+    <Style Selector="Border.ProductCard">
+        <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
+        <Setter Property="CornerRadius" Value="15" />
+        <Setter Property="Padding" Value="15" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.2" />
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.2" />
+            </Transitions>
+        </Setter>
+    </Style>
+    <Style Selector="ListBox.ProductList > ListBoxItem:pointerover Border.ProductCard">
+        <Setter Property="Background" Value="#333333" />
+        <Setter Property="RenderTransform" Value="scale(1.02)" />
+        <Setter Property="Cursor" Value="Hand"/>
+    </Style>
+    <Style Selector="ListBox.ProductList > ListBoxItem:selected Border.ProductCard">
+        <Setter Property="Background" Value="#404040" />
+        <Setter Property="BorderBrush" Value="{DynamicResource RedBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+
 </Styles>

@@ -18,19 +18,19 @@ public partial class MainWindowViewModel : ViewModelBase
     [NotifyPropertyChangedFor(nameof(productPageIsActive))]
     private ViewModelBase _currentPage;
 
-    public bool homePageIsActive => CurrentPage == _homePage;
-    public bool categoryPageIsActive => CurrentPage == _categoryPage || CurrentPage == _productPage;
-    public bool cartPageIsActive => CurrentPage == _cartPage;
-    public bool servicesPageIsActive => CurrentPage == _servicesPage;
+    public bool homePageIsActive => CurrentPage is HomeViewModel;
+    public bool categoryPageIsActive => CurrentPage is CategoryViewModel || CurrentPage is ProductViewModel;
+    public bool cartPageIsActive => CurrentPage is CartViewModel;
+    public bool servicesPageIsActive => CurrentPage is ServicesViewModel;
     
-    public bool productPageIsActive => CurrentPage == _productPage;
+    public bool productPageIsActive => CurrentPage is ProductViewModel;
     
     private readonly CartService _cartService = new();
     
     private readonly HomeViewModel _homePage = new ();
-    private readonly CartViewModel _cartPage;
-    private readonly ServicesViewModel _servicesPage = new();
-    private CategoryViewModel _categoryPage = new ();
+    private  CartViewModel _cartPage;
+    private readonly ServicesViewModel _servicesPage;
+    private CategoryViewModel _categoryPage;
     private readonly ProductViewModel _productPage;
     
     
@@ -38,6 +38,8 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         _cartPage = new CartViewModel(_cartService);
         _productPage = new ProductViewModel(_cartService);
+        _categoryPage = new CategoryViewModel(_cartService);
+        _servicesPage = new ServicesViewModel(_cartService);
         
         
         CurrentPage = _homePage;
