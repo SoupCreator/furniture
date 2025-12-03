@@ -16,5 +16,4 @@ public class WorkOrder
     public int ClientId { get; set; }
     [Column("sellerID")]
     public int SellerId { get; set; }
-    
 }
